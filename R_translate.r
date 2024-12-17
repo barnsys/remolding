@@ -5,7 +5,7 @@ library(phangorn)
 
 setwd("E:\\sequence_translation")
 
-#трансляция стандартным кодом
+#standard code translation
   
 rem<-c("Acanthogammarus_victorii", "Eulimnogammarus_vittatus", "Gmelinoides_fasciatus")
 
@@ -16,14 +16,14 @@ data_cod_total<-read.csv("МT_genetic_code.tsv",sep="\t",header=T, stringsAsFact
 
 n_rundom<-10
 
-#получение набора данных без ремолдинга
+#getting a dataset without remolding
 wcon<-file("Total_amph_COX1-1_prot.fasta", open ="w")
 for(j in 1:length(pas_names))
  {
   pas<-pas_dna[j][1]
   pas<-toupper(pas)
   n_codon<-floor(nchar(pas)/3)
-  #трансляция без ремолдинга
+  #translation without remolding
   codons<-rep("0", n_codon)
   for(i in 1:n_codon) codons[i]<-substring(pas, 3*i-2, 3*i)
   prot_pas<-data.frame(codons=codons)
@@ -41,14 +41,13 @@ close(wcon)
 #/////////////////////////////////////////////////////
 
 
-#получение набора данных с полным ремолдингом
+#getting a dataset with full remolding
 wcon<-file("Total_amph_COX1-1_prot_fuul_remolding.fasta", open ="w")
 for(j in 1:length(pas_names))
  {
   pas<-pas_dna[j][1]
   pas<-toupper(pas)
   n_codon<-floor(nchar(pas)/3)
-  #трансляция без ремолдинга
   codons<-rep("0", n_codon)
   for(i in 1:n_codon) codons[i]<-substring(pas, 3*i-2, 3*i)
   prot_pas<-data.frame(codons=codons)
@@ -61,7 +60,7 @@ for(j in 1:length(pas_names))
   writeLines(paste(">", pas_names[j], "\n", sep=""), wcon, sep="")
   writeLines(paste(amino_acids, collapse=""), wcon, sep="")
   writeLines("\n", wcon, sep="")
-  #трансляция с полным ремолдингом
+  #translation with full remolding
   if(length(which(rem %in% pas_names[j]))>0)
    {
     data_cod<-data_cod_total[, c("codons", "Standard_code", pas_names[j])]
@@ -84,14 +83,13 @@ close(wcon)
 #/////////////////////////////////////////////////////////////////////////
 
 
-#получение набора данных со случаным ремолдингом
+#getting a dataset with random remolding
 wcon<-file("Total_amph_COX1-1_prot_rundom_remolding.fasta", open ="w")
 for(j in 1:length(pas_names))
  {
   pas<-pas_dna[j][1]
   pas<-toupper(pas)
   n_codon<-floor(nchar(pas)/3)
-  #трансляция без ремолдинга
   codons<-rep("0", n_codon)
   for(i in 1:n_codon) codons[i]<-substring(pas, 3*i-2, 3*i)
   prot_pas<-data.frame(codons=codons)
@@ -104,7 +102,7 @@ for(j in 1:length(pas_names))
   writeLines(paste(">", pas_names[j], "\n", sep=""), wcon, sep="")
   writeLines(paste(amino_acids, collapse=""), wcon, sep="")
   writeLines("\n", wcon, sep="")
-  #трансляция с полным ремолдингом
+  #translation with full remolding
   if(length(which(rem %in% pas_names[j]))>0)
    {
     data_cod<-data_cod_total[, c("codons", "Standard_code", pas_names[j])]
@@ -141,7 +139,7 @@ close(wcon)
 
 
 
-#оценка количества вариантов ремолдига
+#Estimation of the number of remolding options
 
 sp<-"Acanthogammarus_victorii"
 
